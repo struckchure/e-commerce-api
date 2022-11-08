@@ -1,0 +1,12 @@
+version: "3.0"
+
+services:
+  api:
+    build:
+      context: .
+      dockerfile: ${PWD}/.docker/python/Dockerfile
+    command: python manage.py runserver 0.0.0.0:${PORT}
+    env_file:
+      - .env
+    ports:
+      - ${PORT}:${PORT}
