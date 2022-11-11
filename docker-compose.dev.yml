@@ -11,19 +11,20 @@ services:
       POSTGRES_PASSWORD: ${DB_PASSWORD}
     ports:
       - 5432:5432
-  # api:
-  #   build:
-  #     context: .
-  #     dockerfile: ${PWD}/.docker/python/Dockerfile
-  #   volumes:
-  #     - .:/home/e_commerce
-  #   command: python manage.py runserver 0.0.0.0:${PORT}
-  #   env_file:
-  #     - .env
-  #   depends_on:
-  #     - db
-  #   ports:
-  #     - ${PORT}:${PORT}
+
+  api:
+    build:
+      context: .
+      dockerfile: ${PWD}/.docker/python/Dockerfile
+    volumes:
+      - .:/home/e_commerce
+    command: python manage.py runserver 0.0.0.0:${PORT}
+    env_file:
+      - .env
+    depends_on:
+      - db
+    ports:
+      - ${PORT}:${PORT}
 
 volumes:
   db_data:
