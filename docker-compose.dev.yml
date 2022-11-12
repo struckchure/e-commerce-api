@@ -12,12 +12,19 @@ services:
     ports:
       - 5432:5432
 
+  storage_bucket:
+    image: struckchure/file_storage:latest
+    ports:
+      - 1276:1276
+
   api:
     build:
       context: .
       dockerfile: ${PWD}/.docker/python/Dockerfile
     volumes:
-      - .:/home/e_commerce
+      - .:/home/e_commerce_user
+      - pip_site_packges:/usr/local/lib/python3.10/site-packages
+      - pip_cache:/home/e_commerce_user/.cache/pip
     command: python manage.py runserver 0.0.0.0:${PORT}
     env_file:
       - .env
@@ -28,3 +35,5 @@ services:
 
 volumes:
   db_data:
+  pip_site_packges:
+  pip_cache:
