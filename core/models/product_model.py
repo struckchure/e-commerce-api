@@ -1,4 +1,4 @@
-from core.managers import CategoryManager, TagManager
+from core.managers import CategoryManager, ProductManager, TagManager
 from django.db import models
 from e_commerce.utils import BaseModel
 
@@ -63,9 +63,12 @@ class Product(BaseModel):
     )
     tags = models.ManyToManyField(Tag, default=[], related_name="tags")
 
+    objects = ProductManager()
+
     class Meta:
         verbose_name = "Product"
         verbose_name_plural = "Products"
+        ordering = ["-created_at"]
 
     def save(self, *args, **kwargs):
         super().save(*args, **kwargs)
