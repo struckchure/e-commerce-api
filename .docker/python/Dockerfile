@@ -5,7 +5,7 @@ RUN adduser --disabled-password --gecos '' e_commerce_user
 USER e_commerce_user
 WORKDIR /home/e_commerce_user
 
-RUN export PATH="/home/e_commerce_user/.local/bin:$PATH"
+ENV PATH="/home/e_commerce_user/.local/bin:$PATH"
 COPY --chown=e_commerce_user:e_commerce_user requirements.txt .
 
 RUN pip install -r requirements.txt
