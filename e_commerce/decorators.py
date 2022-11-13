@@ -15,7 +15,6 @@ def handle_errors():
             try:
                 return func(*args, **kwargs)
             except exceptions.Exception as error:
-                print(error)
                 error = error.__dict__() or error.__str__()
                 code = getattr(error, "code", status.HTTP_400_BAD_REQUEST)
 
@@ -24,6 +23,23 @@ def handle_errors():
                 code = getattr(error, "code", status.HTTP_400_BAD_REQUEST)
 
                 return Response({"error": error}, status=code)
+
+        return wrapper
+
+    return handle_errors
+
+
+def raise_errors():
+    """
+    Decorator to raise errors
+    """
+
+    def handle_errors(func):
+        def wrapper(*args, **kwargs):
+            try:
+                return func(*args, **kwargs)
+            except exceptions.Exception as error:
+                raise error
 
         return wrapper
 
