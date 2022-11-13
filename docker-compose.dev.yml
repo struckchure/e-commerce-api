@@ -30,6 +30,7 @@ services:
       - .env
     depends_on:
       - db
+      - storage_bucket
     ports:
       - ${PORT}:${PORT}
 
