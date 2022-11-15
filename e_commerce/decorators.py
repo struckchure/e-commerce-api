@@ -34,7 +34,7 @@ def raise_errors():
     Decorator to raise errors
     """
 
-    def handle_errors(func):
+    def raise_errors(func):
         def wrapper(*args, **kwargs):
             try:
                 return func(*args, **kwargs)
@@ -43,4 +43,4 @@ def raise_errors():
 
         return wrapper
 
-    return handle_errors
+    return raise_errors
