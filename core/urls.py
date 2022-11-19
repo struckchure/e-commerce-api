@@ -1,7 +1,8 @@
 from django.urls import path
 
 from core.api.auth_api import LoginAPI, RegisterAPI
-from core.api.product_api import ListCreateAPI, GetUpdateDeleteAPI
+from core.api.cart_api import GetUpdateDeleteCartItemAPI, ListCreateCartItemAPI
+from core.api.product_api import GetUpdateDeleteAPI, ListCreateAPI
 
 app_name = "core"
 
@@ -19,7 +20,17 @@ product_urls = [
     ),
 ]
 
+cart_urls = [
+    path("cart/", ListCreateCartItemAPI.as_view(), name="list_create_cart"),
+    path(
+        "cart/<uuid:item_id>/",
+        GetUpdateDeleteCartItemAPI.as_view(),
+        name="get_update_delete_cart",
+    ),
+]
+
 urlpatterns = [
     *auth_urls,
     *product_urls,
+    *cart_urls,
 ]
