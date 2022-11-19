@@ -1,8 +1,8 @@
 from core.services.product_service import ProductService
 from e_commerce.decorators import handle_errors
+from e_commerce.permissions import IsStaffOrReadOnly
 from e_commerce.utils import BaseView, remove_none_values
 from rest_framework import status
-from rest_framework.permissions import IsAuthenticatedOrReadOnly
 from rest_framework.response import Response
 
 product_service = ProductService()
@@ -11,7 +11,7 @@ product_service = ProductService()
 class ListCreateAPI(BaseView):
 
     permission_classes = [
-        IsAuthenticatedOrReadOnly,
+        IsStaffOrReadOnly,
     ]
 
     @handle_errors()
@@ -55,7 +55,7 @@ class ListCreateAPI(BaseView):
 class GetUpdateDeleteAPI(BaseView):
 
     permission_classes = [
-        IsAuthenticatedOrReadOnly,
+        IsStaffOrReadOnly,
     ]
 
     @handle_errors()
