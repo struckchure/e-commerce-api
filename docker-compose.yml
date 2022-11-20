@@ -1,12 +1,47 @@
 version: "3.0"
 
 services:
+  db:
+    image: postgres:14.1-alpine
+    volumes:
+      - db_data:/var/lib/postgresql/data
+    environment:
+      POSTGRES_DB: ${DB_NAME}
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+    expose:
+      - ${DB_PORT}
+    env_file:
+      - .env
+
   api:
     build:
       context: .
       dockerfile: ${PWD}/.docker/python/Dockerfile
-    command: python manage.py runserver 0.0.0.0:${PORT}
     env_file:
       - .env
+    depends_on:
+      - db
     ports:
       - ${PORT}:${PORT}
+
+  nginx:
+    build:
+      context: .
+      dockerfile: ${PWD}/.docker/nginx/Dockerfile
+    depends_on:
+      - api
+    env_file:
+      - .env
+    expose:
+      - 80
+      - 443
+    restart: always
+
+volumes:
+  db_data:
+
+
+networks:
+  default:
+    name: webproxy

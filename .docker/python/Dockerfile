@@ -13,4 +13,4 @@ RUN pip install --upgrade pip && \
 
 COPY --chown=e_commerce_user:e_commerce_user . .
 
-CMD [ "sh", "run.sh" ]
+CMD [ "sh", "scripts/run.sh" ]
