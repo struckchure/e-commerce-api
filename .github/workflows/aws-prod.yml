@@ -1,0 +1,56 @@
+name: AWS CI
+
+on:
+  push:
+    tags:
+      - v*
+
+jobs:
+  build:
+    runs-on: self-hosted
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Generate env file
+        uses: SpicyPizza/create-envfile@v1.3
+        with:
+          envkey_DB_HOST: ${{ secrets.DB_HOST }}
+          envkey_DB_PORT: ${{ secrets.DB_PORT }}
+          envkey_DB_USER: ${{ secrets.DB_USER }}
+          envkey_DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
+          envkey_DB_NAME: ${{ secrets.DB_NAME }}
+          envkey_DB_ENGINE: ${{ secrets.DB_ENGINE }}
+
+          envkey_PORT: ${{ secrets.PORT }}
+
+          envkey_SECRET_KEY: ${{ secrets.SECRET_KEY }}
+          envkey_DEBUG: ${{ secrets.DEBUG }}
+          envkey_ALLOWED_HOSTS: ${{ secrets.ALLOWED_HOSTS }}
+
+          envkey_FILE_STORAGE_URL: ${{ secrets.FILE_STORAGE_URL }}
+
+          envkey_LETSENCRYPT_HOST: ${{ secrets.LETSENCRYPT_HOST }}
+          envkey_VIRTUAL_HOST: ${{ secrets.VIRTUAL_HOST }}
+
+      - name: Build image dependencies with docker-compose
+        run: docker-compose build --parallel --no-cache --force-rm
+
+  test:
+    runs-on: self-hosted
+    needs:
+      - build
+
+    steps:
+      - name: Run tests
+        run: docker-compose run --rm api python manage.py test
+
+  deploy:
+    runs-on: self-hosted
+    needs:
+      - build
+      - test
+
+    steps:
+      - name: Start docker-compose in detached mode
+        run: docker-compose up -d --force-recreate --remove-orphans
