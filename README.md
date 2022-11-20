@@ -2,7 +2,9 @@
 
 [![AWS CI](https://github.com/struckchure/e_commerce_api/actions/workflows/aws-prod.yml/badge.svg)](https://github.com/struckchure/e_commerce_api/actions/workflows/aws-prod.yml)
 
-e-commerce API built with Django Rest Framework. It provides the following features:
+e-commerce API built with Django Rest Framework.
+
+## Features
 
 - User registration and authentication
 - Product listing and management
@@ -12,9 +14,9 @@ e-commerce API built with Django Rest Framework. It provides the following featu
 ## Upcoming features
 
 - Payment integration
-- Shipping integration
+- Shipping methods
 - Product reviews and ratings
-- Store creation and management
+- Store creation and management (although, out of scope for an e-commerce)
 
 ## Installation
 
