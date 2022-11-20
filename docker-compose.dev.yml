@@ -9,8 +9,8 @@ services:
       POSTGRES_DB: ${DB_NAME}
       POSTGRES_USER: ${DB_USER}
       POSTGRES_PASSWORD: ${DB_PASSWORD}
-    ports:
-      - 5432:5432
+    expose:
+      - ${DB_PORT}
 
   storage_bucket:
     image: struckchure/file_storage:latest
@@ -22,10 +22,9 @@ services:
       context: .
       dockerfile: ${PWD}/.docker/python/Dockerfile
     volumes:
-      - .:/home/e_commerce_user
+      - .:/home/e_commerce_user/app
       - pip_site_packges:/usr/local/lib/python3.10/site-packages
       - pip_cache:/home/e_commerce_user/.cache/pip
-    command: python manage.py runserver 0.0.0.0:${PORT}
     env_file:
       - .env
     depends_on:
@@ -33,6 +32,7 @@ services:
       - storage_bucket
     ports:
       - ${PORT}:${PORT}
+    command: python manage.py runserver 0.0.0.0:${PORT}
 
 volumes:
   db_data:
