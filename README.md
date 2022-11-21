@@ -5,6 +5,10 @@
 
 e-commerce API built with Django Rest Framework.
 
+## Documentation
+
+Check [here](https://documenter.getpostman.com/view/12790858/2s8YmUKeWn) for postman documentation.
+
 ## Features
 
 - User registration and authentication
