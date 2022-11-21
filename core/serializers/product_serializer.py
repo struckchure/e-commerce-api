@@ -53,6 +53,33 @@ class ProductSerializer(serializers.ModelSerializer):
 
         return product
 
+    def update(self, instance, validated_data):
+        category = (
+            get_or_create(Category, name=validated_data.pop("category"))
+            if validated_data.get("category")
+            else None
+        )
+        tags = (
+            list(
+                map(
+                    lambda tag: get_or_create(Tag, name=tag), validated_data.pop("tags")
+                )
+            )
+            if validated_data.get("tags")
+            else None
+        )
+
+        instance.name = validated_data.get("name", instance.name)
+        instance.description = validated_data.get("description", instance.description)
+        instance.price = validated_data.get("price", instance.price)
+        instance.stock = validated_data.get("stock", instance.stock)
+        instance.category = category or instance.category
+        instance.tags.set(tags) if tags else None
+
+        instance.save()
+
+        return instance
+
     def to_representation(self, instance: Product):
         data = super().to_representation(instance)
 
