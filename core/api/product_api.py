@@ -20,7 +20,13 @@ class ListCreateAPI(BaseView):
         skip = request.query_params.get("skip")
         limit = request.query_params.get("limit")
 
-        kwargs = remove_none_values({"search": search, "skip": skip, "limit": limit})
+        kwargs = remove_none_values(
+            {
+                "search": search,
+                "skip": int(skip) if skip else None,
+                "limit": int(limit) if limit else None,
+            }
+        )
 
         return Response(
             {"data": product_service.list_product(**kwargs)}, status=status.HTTP_200_OK
