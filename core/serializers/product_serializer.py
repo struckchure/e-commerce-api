@@ -23,6 +23,9 @@ class ProductSerializer(serializers.ModelSerializer):
             "stock",
             "category",
             "tags",
+            "added_by",
+            "created_at",
+            "updated_at",
         ]
 
     def create(self, validated_data):
@@ -87,6 +90,9 @@ class ProductSerializer(serializers.ModelSerializer):
         data["category"] = instance.category.name if instance.category else None
         data["tags"] = (
             instance.tags.all().values_list("name", flat=True) if instance.tags else []
+        )
+        data["added_by"] = (
+            instance.added_by.username if instance.added_by else "Deleted User"
         )
 
         return data
