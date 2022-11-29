@@ -1,6 +1,10 @@
 from core.managers import CategoryManager, ProductManager, TagManager
 from django.db import models
+from django.contrib.auth import get_user_model
 from e_commerce.utils import BaseModel
+
+
+User = get_user_model()
 
 
 class Image(BaseModel):
@@ -62,6 +66,7 @@ class Product(BaseModel):
         Category, on_delete=models.SET_NULL, null=True, related_name="category"
     )
     tags = models.ManyToManyField(Tag, default=[], related_name="tags")
+    added_by = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
 
     objects = ProductManager()
 
