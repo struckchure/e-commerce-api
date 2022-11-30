@@ -1,7 +1,12 @@
 from django.urls import path
 
 from core.api.auth_api import LoginAPI, RegisterAPI
-from core.api.cart_api import GetUpdateDeleteCartItemAPI, ListCreateCartItemAPI
+from core.api.cart_api import (
+    CartCheckoutAPI,
+    GetUpdateDeleteCartItemAPI,
+    ListCreateCartItemAPI,
+)
+from core.api.order_api import GetOrderAPI, ListOrderAPI
 from core.api.product_api import GetUpdateDeleteAPI, ListCreateAPI
 from core.api.payment_platform_api import (
     ListCreatePaymentPlatformAPI,
@@ -33,6 +38,7 @@ cart_urls = [
         GetUpdateDeleteCartItemAPI.as_view(),
         name="get_update_delete_cart",
     ),
+    path("cart/checkout/", CartCheckoutAPI.as_view(), name="checkout_cart"),
 ]
 
 payment_platform_urls = [
@@ -52,10 +58,16 @@ webhook_urls = [
     path("webhooks/paystack/", PaystackWebhookAPI.as_view(), name="paystack_webhook"),
 ]
 
+order_urls = [
+    path("orders/", ListOrderAPI.as_view(), name="list_order"),
+    path("orders/<uuid:order_id>/", GetOrderAPI.as_view(), name="get_order"),
+]
+
 urlpatterns = [
     *auth_urls,
     *product_urls,
     *cart_urls,
     *payment_platform_urls,
     *webhook_urls,
+    *order_urls,
 ]

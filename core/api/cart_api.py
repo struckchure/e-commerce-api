@@ -70,3 +70,20 @@ class GetUpdateDeleteCartItemAPI(BaseView):
         CartService().delete_item(item_id)
 
         return Response(status=status.HTTP_204_NO_CONTENT)
+
+
+class CartCheckoutAPI(BaseView):
+
+    permission_classes = [
+        IsAuthenticated,
+    ]
+
+    @handle_errors()
+    def post(self, request):
+        user_id = request.user.id
+        cart_items = request.data.get("cart_items")
+
+        return Response(
+            {"data": CartService().checkout(user_id, cart_items)},
+            status=status.HTTP_201_CREATED,
+        )
