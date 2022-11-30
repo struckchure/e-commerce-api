@@ -35,14 +35,14 @@ class PaystackService:
         payment = self.paystack_platform.initiate_payment(amount=amount, email=email)
         platform_reference = payment["data"]["reference"]
 
-        TransactionService.create_transaction(
+        transaction = TransactionService.create_transaction(
             user=user.id,
             amount=amount,
             platform_reference=platform_reference,
             type=Transaction.TRANSACTION_TYPE.DEBIT,
         )
 
-        return {"url": payment["data"]["authorization_url"]}
+        return {**transaction, "url": payment["data"]["authorization_url"]}
 
     @staticmethod
     def verify_payment(data):
@@ -69,5 +69,32 @@ class PaystackService:
 
                 raise exceptions.Exception(
                     {"message": "Could not verify payment"},
+                    code=status.HTTP_400_BAD_REQUEST,
+                )
+
+
+class PaymentService:
+
+    platform = PaymentPlatform.objects.filter(active=True).first().platform
+
+    @classmethod
+    def initiate_payment(cls, amount, email):
+        match cls.platform:
+            case PaymentPlatform.AVAILABLE_PLATFORMS.PAYSTACK:
+                return PaystackService().initiate_payment(amount=amount, email=email)
+            case _:
+                raise exceptions.Exception(
+                    {"message": "Payment platform not supported"},
+                    code=status.HTTP_400_BAD_REQUEST,
+                )
+
+    @classmethod
+    def verify_payment(cls, data):
+        match cls.platform:
+            case PaymentPlatform.AVAILABLE_PLATFORMS.PAYSTACK:
+                return PaystackService().verify_payment(data=data)
+            case _:
+                raise exceptions.Exception(
+                    {"message": "Payment platform not supported"},
                     code=status.HTTP_400_BAD_REQUEST,
                 )

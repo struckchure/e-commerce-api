@@ -1,7 +1,9 @@
 from core.models.cart_model import CartItem
 from core.serializers.cart_serializer import CartItemSerializer
+from core.services.order_service import OrderService
 from e_commerce import exceptions
 from e_commerce.utils import get_object_or_error, remove_none_values
+from core.services.platform_payment_service import PaymentService
 
 
 class CartService:
@@ -50,3 +52,33 @@ class CartService:
         item.delete()
 
         return None
+
+    @staticmethod
+    def checkout(user_id, cart_items=None):
+        items = CartItem.objects.filter(
+            **remove_none_values({"user": user_id, "id__in": cart_items})
+        )
+
+        amount = sum(map(lambda item: item.price, items))
+        email = items.first().user.email
+        payment = PaymentService.initiate_payment(amount, email)
+
+        orders = list(
+            map(
+                lambda item: OrderService.create_order(
+                    user_id=user_id,
+                    product=item.product.id,
+                    quantity=item.quantity,
+                    transaction_id=payment["id"],
+                ),
+                items,
+            )
+        )
+
+        if orders:
+            items.delete()
+
+        return {
+            "url": payment["url"],
+            "message": "Orders have been placed. Proceed to payment.",
+        }
