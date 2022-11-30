@@ -75,11 +75,13 @@ class PaystackService:
 
 class PaymentService:
 
-    platform = PaymentPlatform.objects.filter(active=True).first().platform
+    platform = None
 
-    @classmethod
-    def initiate_payment(cls, amount, email):
-        match cls.platform:
+    def __init__(self):
+        self.platform = PaymentPlatform.objects.filter(active=True).first().platform
+
+    def initiate_payment(self, amount, email):
+        match self.platform:
             case PaymentPlatform.AVAILABLE_PLATFORMS.PAYSTACK:
                 return PaystackService().initiate_payment(amount=amount, email=email)
             case _:
@@ -88,9 +90,8 @@ class PaymentService:
                     code=status.HTTP_400_BAD_REQUEST,
                 )
 
-    @classmethod
-    def verify_payment(cls, data):
-        match cls.platform:
+    def verify_payment(self, data):
+        match self.platform:
             case PaymentPlatform.AVAILABLE_PLATFORMS.PAYSTACK:
                 return PaystackService().verify_payment(data=data)
             case _:

@@ -61,7 +61,7 @@ class CartService:
 
         amount = sum(map(lambda item: item.price, items))
         email = items.first().user.email
-        payment = PaymentService.initiate_payment(amount, email)
+        payment = PaymentService().initiate_payment(amount, email)
 
         orders = list(
             map(
