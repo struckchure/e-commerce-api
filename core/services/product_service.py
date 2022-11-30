@@ -6,7 +6,8 @@ from e_commerce.utils import get_object_or_error, remove_none_values
 
 
 class ProductService:
-    def list_product(self, search=None, skip=0, limit=10):
+    @staticmethod
+    def list_product(search=None, skip=0, limit=10):
         product_list = Product.objects.filter(
             models.Q(name__icontains=search)
             | models.Q(description__icontains=search)
@@ -18,13 +19,14 @@ class ProductService:
 
         return ProductSerializer(product_list, many=True).data
 
-    def get_product(self, id):
+    @staticmethod
+    def get_product(id):
         product = get_object_or_error(Product, id=id)
 
         return ProductSerializer(product).data
 
+    @staticmethod
     def create_product(
-        self,
         name,
         description,
         images,
@@ -52,8 +54,8 @@ class ProductService:
 
         return product_create_serializer.data
 
+    @staticmethod
     def update_product(
-        self,
         id,
         name=None,
         description=None,
@@ -86,7 +88,8 @@ class ProductService:
 
         return product_update_serializer.data
 
-    def delete_product(self, id):
+    @staticmethod
+    def delete_product(id):
         product = get_object_or_error(Product, id=id)
         product.delete()
 

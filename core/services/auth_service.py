@@ -5,8 +5,8 @@ from rest_framework.authtoken.models import Token
 
 
 class AuthService:
+    @staticmethod
     def register_user(
-        self,
         first_name=None,
         last_name=None,
         username=None,
@@ -34,7 +34,8 @@ class AuthService:
 
         return {**register_user_serializer.data, "token": token.key}
 
-    def login_user(self, username, password):
+    @staticmethod
+    def login_user(username, password):
         login_user_serializer = LoginSerializer(
             data={"username": username, "password": password}
         )

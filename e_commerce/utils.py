@@ -1,3 +1,4 @@
+import secrets
 import uuid
 
 import requests
@@ -72,3 +73,7 @@ class FileStorageAPI:
     @raise_errors()
     def upload_file(self, *files):
         return list(map(self._upload_file, files))
+
+
+def generate_reference():
+    return secrets.token_hex(8).upper()
