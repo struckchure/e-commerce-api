@@ -36,6 +36,9 @@ jobs:
       - name: Build image dependencies with docker-compose
         run: docker-compose build --parallel --no-cache --force-rm
 
+      - name: Run Database migrations
+        run: docker-compose run --rm api python manage.py migrate
+
   test:
     runs-on: self-hosted
     needs:
