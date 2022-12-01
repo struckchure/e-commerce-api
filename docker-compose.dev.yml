@@ -9,8 +9,8 @@ services:
       POSTGRES_DB: ${DB_NAME}
       POSTGRES_USER: ${DB_USER}
       POSTGRES_PASSWORD: ${DB_PASSWORD}
-    expose:
-      - ${DB_PORT}
+    ports:
+      - ${DB_PORT}:${DB_PORT}
 
   storage_bucket:
     image: struckchure/file_storage:latest
