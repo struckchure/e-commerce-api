@@ -78,7 +78,11 @@ class PaymentService:
     platform = None
 
     def __init__(self):
-        self.platform = PaymentPlatform.objects.filter(active=True).first().platform
+        self.platform = getattr(
+            PaymentPlatform.objects.filter(active=True).first(), "platform", None
+        )
+        if not self.platform:
+            raise exceptions.Exception("No active payment platform")
 
     def initiate_payment(self, amount, email):
         match self.platform:
