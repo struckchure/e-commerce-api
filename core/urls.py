@@ -13,7 +13,11 @@ from core.api.payment_platform_api import (
     GetUpdateDeletePaymentPlatformAPI,
 )
 from core.api.web_hooks_api import PaystackWebhookAPI
-
+from core.api.user_api import (
+    ListCreateUserAPI,
+    ChangeStaffStatusAPI,
+    GetUpdateDeleteUserAPI,
+)
 
 app_name = "core"
 
@@ -55,6 +59,20 @@ payment_platform_urls = [
     ),
 ]
 
+user_urls = [
+    path("users/", ListCreateUserAPI.as_view(), name="list_create_users"),
+    path(
+        "users/<uuid:user_id>/",
+        GetUpdateDeleteUserAPI.as_view(),
+        name="get_update_delete_user",
+    ),
+    path(
+        "users/<uuid:user_id>/change-staff-status/",
+        ChangeStaffStatusAPI.as_view(),
+        name="change_staff_status",
+    ),
+]
+
 webhook_urls = [
     path("webhooks/paystack/", PaystackWebhookAPI.as_view(), name="paystack_webhook"),
 ]
@@ -71,4 +89,5 @@ urlpatterns = [
     *payment_platform_urls,
     *webhook_urls,
     *order_urls,
+    *user_urls,
 ]
