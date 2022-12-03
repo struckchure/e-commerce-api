@@ -1,7 +1,11 @@
 from core.serializers.auth_serializer import LoginSerializer, UserSerializer
 from e_commerce import exceptions
-from e_commerce.utils import remove_none_values
+from e_commerce.utils import get_object_or_error, remove_none_values
 from rest_framework.authtoken.models import Token
+from django.contrib.auth import get_user_model
+
+
+User = get_user_model()
 
 
 class AuthService:
@@ -48,3 +52,9 @@ class AuthService:
         token, _ = Token.objects.get_or_create(user=login_user_serializer.instance)
 
         return {**login_user_serializer.data, "token": token.key}
+
+    @staticmethod
+    def get_user(user_id):
+        user = get_object_or_error(User, id=user_id)
+
+        return UserSerializer(user).data
