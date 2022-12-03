@@ -1,6 +1,6 @@
 from django.urls import path
 
-from core.api.auth_api import LoginAPI, RegisterAPI
+from core.api.auth_api import LoginAPI, ProfileAPI, RegisterAPI
 from core.api.cart_api import (
     CartCheckoutAPI,
     GetUpdateDeleteCartItemAPI,
@@ -20,6 +20,7 @@ app_name = "core"
 auth_urls = [
     path("auth/register/", RegisterAPI.as_view(), name="register_user"),
     path("auth/login/", LoginAPI.as_view(), name="login_user"),
+    path("auth/profile/", ProfileAPI.as_view(), name="profile"),
 ]
 
 product_urls = [

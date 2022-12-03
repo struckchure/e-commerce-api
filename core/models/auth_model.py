@@ -8,10 +8,10 @@ class User(AbstractUser, BaseModel):
     first_name = models.CharField(max_length=100, blank=True)
     last_name = models.CharField(max_length=100, blank=True)
     username = models.CharField(max_length=100, blank=False, unique=True)
-    email = models.EmailField(max_length=255, blank=True)
+    email = models.EmailField(max_length=255, blank=False, unique=True)
 
     USERNAME_FIELD = "username"
-    REQUIRED_FIELDS = []
+    REQUIRED_FIELDS = ["email"]
 
     class Meta:
         verbose_name = "User"

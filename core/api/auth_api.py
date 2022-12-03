@@ -1,5 +1,6 @@
 from core.services.auth_service import AuthService
 from e_commerce.decorators import handle_errors
+from e_commerce.permissions import IsAuthenticated
 from e_commerce.utils import BaseView
 from rest_framework import status
 from rest_framework.response import Response
@@ -32,5 +33,19 @@ class LoginAPI(BaseView):
 
         return Response(
             {"data": auth_service.login_user(username=username, password=password)},
+            status=status.HTTP_200_OK,
+        )
+
+
+class ProfileAPI(BaseView):
+
+    permission_classes = [
+        IsAuthenticated,
+    ]
+
+    @handle_errors()
+    def get(self, request):
+        return Response(
+            {"data": auth_service.get_user(user_id=request.user.id)},
             status=status.HTTP_200_OK,
         )
