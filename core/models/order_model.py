@@ -22,6 +22,9 @@ class Order(BaseModel):
         max_length=50, choices=ORDER_STATUS.choices, default=ORDER_STATUS.PENDING
     )
 
+    class Meta:
+        ordering = ["-updated_at"]
+
     def __str__(self):
         return f"Order {self.reference}"
 

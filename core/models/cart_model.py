@@ -13,7 +13,7 @@ class CartItem(BaseModel):
     class Meta:
         verbose_name = "Cart item"
         verbose_name_plural = "Cart items"
-        ordering = ["-created_at"]
+        ordering = ["-updated_at"]
 
     def save(self, *args, **kwargs):
         super().save(*args, **kwargs)
