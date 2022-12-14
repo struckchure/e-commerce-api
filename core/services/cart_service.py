@@ -1,17 +1,20 @@
+from django.db import models
+
 from core.models.cart_model import CartItem
 from core.serializers.cart_serializer import CartItemSerializer
 from core.services.order_service import OrderService
+from core.services.platform_payment_service import PaymentService
 from e_commerce import exceptions
 from e_commerce.utils import get_object_or_error, remove_none_values
-from core.services.platform_payment_service import PaymentService
 
 
 class CartService:
     @staticmethod
     def list_items(user_id, skip=0, limit=10):
         items = CartItem.objects.filter(user_id=user_id)[skip:limit]
+        cart_total = sum([item.price for item in items])
 
-        return CartItemSerializer(items, many=True).data
+        return CartItemSerializer(items, many=True).data, cart_total
 
     @staticmethod
     def get_item(item_id):
