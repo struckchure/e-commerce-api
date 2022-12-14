@@ -1,9 +1,10 @@
+from rest_framework import status
+from rest_framework.response import Response
+
 from core.services.cart_service import CartService
 from e_commerce.decorators import handle_errors
 from e_commerce.permissions import IsAuthenticated, IsObjectOwner
 from e_commerce.utils import BaseView
-from rest_framework import status
-from rest_framework.response import Response
 
 
 class ListCreateCartItemAPI(BaseView):
@@ -18,8 +19,10 @@ class ListCreateCartItemAPI(BaseView):
         skip = request.query_params.get("skip")
         limit = request.query_params.get("limit")
 
+        cart_items, cart_total = CartService().list_items(user_id, skip, limit)
+
         return Response(
-            {"data": CartService().list_items(user_id, skip, limit)},
+            {"data": cart_items, "total": cart_total},
             status=status.HTTP_200_OK,
         )
 
