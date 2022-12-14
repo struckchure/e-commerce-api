@@ -1,6 +1,7 @@
+from django.db import models
+
 from core.models.product_model import Product
 from core.serializers.product_serializer import ProductSerializer
-from django.db import models
 from e_commerce import exceptions
 from e_commerce.utils import get_object_or_error, remove_none_values
 
@@ -32,6 +33,7 @@ class ProductService:
         images,
         price,
         stock,
+        user_id,
         category=None,
         tags=None,
     ):
@@ -45,6 +47,7 @@ class ProductService:
                     "stock": stock,
                     "category": category,
                     "tags": tags,
+                    "added_by": user_id,
                 }
             )
         )

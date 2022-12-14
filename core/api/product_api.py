@@ -1,9 +1,10 @@
+from rest_framework import status
+from rest_framework.response import Response
+
 from core.services.product_service import ProductService
 from e_commerce.decorators import handle_errors
 from e_commerce.permissions import IsStaffOrReadOnly
 from e_commerce.utils import BaseView, remove_none_values
-from rest_framework import status
-from rest_framework.response import Response
 
 product_service = ProductService()
 
@@ -50,6 +51,7 @@ class ListCreateAPI(BaseView):
                     images=images,
                     price=price,
                     stock=stock,
+                    user_id=request.user.id,
                     category=category,
                     tags=tags,
                 )
