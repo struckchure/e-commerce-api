@@ -1,9 +1,9 @@
+from django.contrib.auth import get_user_model
+from rest_framework.authtoken.models import Token
+
 from core.serializers.auth_serializer import LoginSerializer, UserSerializer
 from e_commerce import exceptions
 from e_commerce.utils import get_object_or_error, remove_none_values
-from rest_framework.authtoken.models import Token
-from django.contrib.auth import get_user_model
-
 
 User = get_user_model()
 

@@ -7,17 +7,17 @@ from core.api.cart_api import (
     ListCreateCartItemAPI,
 )
 from core.api.order_api import GetOrderAPI, ListOrderAPI
-from core.api.product_api import GetUpdateDeleteAPI, ListCreateAPI
 from core.api.payment_platform_api import (
-    ListCreatePaymentPlatformAPI,
     GetUpdateDeletePaymentPlatformAPI,
+    ListCreatePaymentPlatformAPI,
 )
-from core.api.web_hooks_api import PaystackWebhookAPI
+from core.api.product_api import GetUpdateDeleteAPI, ListCreateAPI
 from core.api.user_api import (
-    ListCreateUserAPI,
     ChangeStaffStatusAPI,
     GetUpdateDeleteUserAPI,
+    ListCreateUserAPI,
 )
+from core.api.web_hooks_api import PaystackWebhookAPI
 
 app_name = "core"
 

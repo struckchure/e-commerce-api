@@ -1,8 +1,9 @@
-from e_commerce.utils import BaseModel, generate_reference
-from django.db import models
 from django.contrib.auth import get_user_model
-from core.models.product_model import Product
+from django.db import models
+
 from core.models.payment_model import Transaction
+from core.models.product_model import Product
+from e_commerce.utils import BaseModel, generate_reference
 
 User = get_user_model()
 

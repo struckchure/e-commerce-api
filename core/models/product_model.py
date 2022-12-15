@@ -1,8 +1,8 @@
-from core.managers import CategoryManager, ProductManager, TagManager
-from django.db import models
 from django.contrib.auth import get_user_model
-from e_commerce.utils import BaseModel
+from django.db import models
 
+from core.managers import CategoryManager, ProductManager, TagManager
+from e_commerce.utils import BaseModel
 
 User = get_user_model()
 

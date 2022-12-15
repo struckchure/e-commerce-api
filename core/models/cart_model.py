@@ -1,6 +1,7 @@
+from django.db import models
+
 from core.models.auth_model import User
 from core.models.product_model import Product
-from django.db import models
 from e_commerce.utils import BaseModel
 
 

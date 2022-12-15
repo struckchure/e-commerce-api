@@ -1,5 +1,5 @@
-from core.serializers.order_serializer import OrderSerializer
 from core.models.order_model import Order
+from core.serializers.order_serializer import OrderSerializer
 from e_commerce import exceptions
 from e_commerce.utils import get_object_or_error, remove_none_values
 

@@ -1,6 +1,7 @@
+from rest_framework import serializers
+
 from core.models.product_model import Category, Image, Product, Tag
 from e_commerce.utils import FileStorageAPI, get_or_create
-from rest_framework import serializers
 
 
 class ProductSerializer(serializers.ModelSerializer):

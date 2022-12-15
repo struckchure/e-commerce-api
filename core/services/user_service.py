@@ -1,9 +1,9 @@
 from django.contrib.auth import get_user_model
 from django.db import models
-from core.serializers.auth_serializer import UserSerializer
-from e_commerce.utils import get_object_or_error, remove_none_values
-from e_commerce import exceptions
 
+from core.serializers.auth_serializer import UserSerializer
+from e_commerce import exceptions
+from e_commerce.utils import get_object_or_error, remove_none_values
 
 User = get_user_model()
 
