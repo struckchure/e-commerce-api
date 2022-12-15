@@ -1,3 +1,5 @@
+from django.contrib.auth.decorators import permission_required
+from django.utils.decorators import method_decorator
 from rest_framework import status
 from rest_framework.response import Response
 
@@ -7,6 +9,14 @@ from e_commerce.permissions import IsStaff
 from e_commerce.utils import BaseView
 
 
+@method_decorator(
+    permission_required(["core.view_paymentplatform"], raise_exception=True),
+    name="get",
+)
+@method_decorator(
+    permission_required(["core.add_paymentplatform"], raise_exception=True),
+    name="post",
+)
 class ListCreatePaymentPlatformAPI(BaseView):
 
     permission_classes = [
@@ -36,6 +46,18 @@ class ListCreatePaymentPlatformAPI(BaseView):
         return Response({"data": payment_platform}, status=status.HTTP_201_CREATED)
 
 
+@method_decorator(
+    permission_required(["core.view_paymentplatform"], raise_exception=True),
+    name="get",
+)
+@method_decorator(
+    permission_required(["core.change_paymentplatform"], raise_exception=True),
+    name="put",
+)
+@method_decorator(
+    permission_required(["core.delete_paymentplatform"], raise_exception=True),
+    name="delete",
+)
 class GetUpdateDeletePaymentPlatformAPI(BaseView):
 
     permission_classes = [

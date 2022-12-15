@@ -1,3 +1,5 @@
+from django.contrib.auth.decorators import permission_required
+from django.utils.decorators import method_decorator
 from rest_framework import status
 from rest_framework.response import Response
 
@@ -9,6 +11,10 @@ from e_commerce.utils import BaseView, remove_none_values
 product_service = ProductService()
 
 
+@method_decorator(
+    permission_required(["core.add_product"], raise_exception=True),
+    name="post",
+)
 class ListCreateAPI(BaseView):
 
     permission_classes = [
@@ -60,6 +66,14 @@ class ListCreateAPI(BaseView):
         )
 
 
+@method_decorator(
+    permission_required(["core.change_product"], raise_exception=True),
+    name="put",
+)
+@method_decorator(
+    permission_required(["core.delete_product"], raise_exception=True),
+    name="delete",
+)
 class GetUpdateDeleteAPI(BaseView):
 
     permission_classes = [

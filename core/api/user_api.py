@@ -1,3 +1,5 @@
+from django.contrib.auth.decorators import permission_required
+from django.utils.decorators import method_decorator
 from rest_framework import status
 from rest_framework.response import Response
 
@@ -7,6 +9,14 @@ from e_commerce.permissions import IsStaff
 from e_commerce.utils import BaseView
 
 
+@method_decorator(
+    permission_required(["core.view_user"], raise_exception=True),
+    name="get",
+)
+@method_decorator(
+    permission_required(["core.add_user"], raise_exception=True),
+    name="post",
+)
 class ListCreateUserAPI(BaseView):
 
     permission_classes = [
@@ -31,6 +41,10 @@ class ListCreateUserAPI(BaseView):
         return Response({"data": users}, status=status.HTTP_200_OK)
 
 
+@method_decorator(
+    permission_required(["core.change_user"], raise_exception=True),
+    name="put",
+)
 class ChangeStaffStatusAPI(BaseView):
 
     permission_classes = [
@@ -46,6 +60,18 @@ class ChangeStaffStatusAPI(BaseView):
         return Response({"data": user}, status=status.HTTP_202_ACCEPTED)
 
 
+@method_decorator(
+    permission_required(["core.view_user"], raise_exception=True),
+    name="get",
+)
+@method_decorator(
+    permission_required(["core.change_user"], raise_exception=True),
+    name="put",
+)
+@method_decorator(
+    permission_required(["core.delete_user"], raise_exception=True),
+    name="delete",
+)
 class GetUpdateDeleteUserAPI(BaseView):
 
     permission_classes = [
