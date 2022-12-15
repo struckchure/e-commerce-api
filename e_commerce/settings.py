@@ -125,6 +125,7 @@ REST_FRAMEWORK = {
     "DEFAULT_AUTHENTICATION_CLASSES": [
         "rest_framework.authentication.TokenAuthentication",
     ],
+    "EXCEPTION_HANDLER": "e_commerce.exceptions.customer_exception_handler",
 }
 
 CORS_ALLOW_ALL_ORIGINS = True
