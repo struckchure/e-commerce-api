@@ -15,10 +15,11 @@ Check [here](https://documenter.getpostman.com/view/12790858/2s8YmUKeWn) for pos
 - Product listing and management
 - Shopping cart
 - Order management
+- Payment integration
+- Staff / User management
 
 ## Upcoming features
 
-- Payment integration
 - Shipping methods
 - Product reviews and ratings
 - Store creation and management (although, out of scope for an e-commerce)
