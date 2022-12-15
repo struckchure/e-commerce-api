@@ -1,7 +1,8 @@
-from core.models.auth_model import User
 from django.contrib.auth import authenticate
 from django.utils import timezone
 from rest_framework import serializers, status
+
+from core.models.auth_model import User
 from e_commerce import exceptions
 
 

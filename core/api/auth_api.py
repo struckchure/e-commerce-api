@@ -1,9 +1,10 @@
+from rest_framework import status
+from rest_framework.response import Response
+
 from core.services.auth_service import AuthService
 from e_commerce.decorators import handle_errors
 from e_commerce.permissions import IsAuthenticated
 from e_commerce.utils import BaseView
-from rest_framework import status
-from rest_framework.response import Response
 
 auth_service = AuthService()
 

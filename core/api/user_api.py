@@ -1,9 +1,10 @@
+from rest_framework import status
+from rest_framework.response import Response
+
+from core.services.user_service import UserService
+from e_commerce.decorators import handle_errors
 from e_commerce.permissions import IsStaff
 from e_commerce.utils import BaseView
-from e_commerce.decorators import handle_errors
-from rest_framework.response import Response
-from rest_framework import status
-from core.services.user_service import UserService
 
 
 class ListCreateUserAPI(BaseView):

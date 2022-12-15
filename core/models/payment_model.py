@@ -1,7 +1,7 @@
-from e_commerce.utils import BaseModel, generate_reference
-from django.db import models
 from django.contrib.auth import get_user_model
+from django.db import models
 
+from e_commerce.utils import BaseModel, generate_reference
 
 User = get_user_model()
 

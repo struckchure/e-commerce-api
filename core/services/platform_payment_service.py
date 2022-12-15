@@ -1,12 +1,11 @@
-from rest_framework import status
 from django.contrib.auth import get_user_model
+from rest_framework import status
 
 from core.models.payment_model import PaymentPlatform, Transaction
-from core.platforms.paystack import PaystackEvents, Paystack
+from core.platforms.paystack import Paystack, PaystackEvents
 from core.services.payment_service import TransactionService
 from e_commerce import exceptions
 from e_commerce.utils import get_object_or_error
-
 
 User = get_user_model()
 

@@ -1,6 +1,8 @@
 import enum
-from core.platforms.base import Platform
+
 import requests
+
+from core.platforms.base import Platform
 
 RECIEVE_ENDPOINT = "https://api.paystack.co/transaction/initialize/"
 VERIFY_ENDPOINT = "https://api.paystack.co/transaction/verify/"
