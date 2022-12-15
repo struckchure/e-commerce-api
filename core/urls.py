@@ -11,6 +11,7 @@ from core.api.payment_platform_api import (
     GetUpdateDeletePaymentPlatformAPI,
     ListCreatePaymentPlatformAPI,
 )
+from core.api.permission_api import ListUpdatePermissionAPI
 from core.api.product_api import GetUpdateDeleteAPI, ListCreateAPI
 from core.api.user_api import (
     ChangeStaffStatusAPI,
@@ -82,6 +83,12 @@ order_urls = [
     path("orders/<uuid:order_id>/", GetOrderAPI.as_view(), name="get_order"),
 ]
 
+permission_urls = [
+    path(
+        "permission/", ListUpdatePermissionAPI.as_view(), name="list_update_permission"
+    ),
+]
+
 urlpatterns = [
     *auth_urls,
     *product_urls,
@@ -90,4 +97,5 @@ urlpatterns = [
     *webhook_urls,
     *order_urls,
     *user_urls,
+    *permission_urls,
 ]
