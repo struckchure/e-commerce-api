@@ -1,3 +1,5 @@
+import itertools
+
 from django.apps import apps
 from django.contrib.auth.models import Permission
 from django.contrib.contenttypes.models import ContentType
@@ -31,7 +33,7 @@ class PermissionService:
             for model in app_models
         ]
 
-        return permissions
+        return list(itertools.chain(*permissions))
 
     @staticmethod
     def add_user_permissions(user_id, *codenames):
